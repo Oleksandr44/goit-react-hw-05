@@ -13,9 +13,11 @@
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "modern-normalize": "^2.0.0",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.23.1",
+    "wikiextension-cinego": "^1.9.5",
+    "wikiextensions-flix": "^1.8.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
