@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+  font-weight: 700;
+}
+
+.link:hover {
+  text-decoration: underline; /* Додавання підкреслення */
+}
+
+.active {
+  color: red;
+}
