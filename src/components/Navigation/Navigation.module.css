@@ -12,7 +12,7 @@
 }
 
 .link:hover {
-  text-decoration: underline; /* Додавання підкреслення */
+  text-decoration: underline;
 }
 
 .active {

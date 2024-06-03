@@ -1,47 +1,55 @@
 import css from './MovieDetailsPage.module.css'
 import { useState, useEffect, useRef } from 'react';
-import { useParams, NavLink, Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, NavLink, Outlet, Link, useLocation } from 'react-router-dom';
 import { getMovieDetails, getConfiguration, buildImageUrl } from '../../movies-api';
+import toast from 'react-hot-toast';
+
+const defaultImg = 'https://steamuserimages-a.akamaihd.net/ugc/1818901991519943758/83C3E979D84F09C27D8187CC1A528A35CE020AD2/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false';
 
 export default function MovieDetailsPage() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [baseImageUrl, setBaseImageUrl] = useState('');
+  const [loading, setLoading] = useState(true);
+  
   const location = useLocation();
-
   const backLinkRef = useRef(location.state ?? '/movies');
-  console.log(location);
-  // const navigate = useNavigate();
- 
   
   useEffect(() => {
-      const fetchMovieDetails = async () => {
+    const fetchMovieDetails = async () => {
+      setLoading(true);
+      try {
       const movieDetails = await getMovieDetails(id);
-      setMovie(movieDetails);
+        setMovie(movieDetails);
+      } catch (error) {
+        toast.error('Failed to fetch movie details.');
+      } finally {
+        setLoading(false);
+      }
       };
       
-      const fetchConfiguration = async () => {
+    const fetchConfiguration = async () => {
+        try {
       const config = await getConfiguration();
-      setBaseImageUrl(config.secure_base_url);
+          setBaseImageUrl(config.secure_base_url);
+          } catch (error) {
+        toast.error('Failed to fetch configuration.');
+      }
       };
                  
       fetchMovieDetails();
       fetchConfiguration();      
   }, [id]);
 
-  if (!movie) {
+  if (loading) {
     return <div>Loading...</div>;
-    }
+  }
+
+  if (!movie) {
+    return <div>Error loading movie details.</div>;
+  }
     
-  const posterUrl = buildImageUrl(baseImageUrl, 'w500', movie.poster_path);
-  
-  // const handleGoBack = () => {
-  //   if (location.state && location.state.from) {
-  //     navigate(location.state.from);
-  //   } else {
-  //     navigate('/movies');
-  //   }
-  // };
+  const posterUrl = movie.poster_path ? buildImageUrl(baseImageUrl, 'w500', movie.poster_path) : defaultImg;
 
     return (
       <div className={css.container}>

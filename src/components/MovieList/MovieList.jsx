@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 
 export default function MovieList({ movies }) {
   const location = useLocation();
-  console.log(location);
 
   return (
     <div>
@@ -20,8 +19,6 @@ export default function MovieList({ movies }) {
   );
 }
 
-//to={`${movie.id}`} відносний шлях
-//to={`/movie/${movie.id}`} абсолютний шлях
 
 
 
